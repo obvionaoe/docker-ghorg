@@ -44,6 +44,9 @@ jobs:
       - name: Get the tag
         id: tag_name
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: test tag
+        run: echo "${{ steps.tag_name.outputs }}"
             
       - name: Build and push 
         id: docker_build
@@ -52,7 +55,7 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository_owner }}/ghorg:${{ steps.tag_name }}
+          tags:  ${{ github.repository_owner }}/ghorg:${{ steps.tag_name.outputs }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
