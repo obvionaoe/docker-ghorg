@@ -37,12 +37,15 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository }}:latest
+          tags:  ${{ github.repository_owner }}/ghorg:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Image digest
         run: echo ${{ steps.docker_build_latest.outputs.digest }}
+
+      - name: Echo tags
+        run: echo "${{ github.event.release.tag_name }}"
       
       - name: Build and push 
         id: docker_build
@@ -51,7 +54,7 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository }}:${{ github.event.release.tag_name }}
+          tags:  ${{ github.repository_owner }}/ghorg:${{ github.event.release.tag_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
