@@ -41,9 +41,6 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Image digest
-        run: echo ${{ steps.docker_build_latest.outputs.digest }}
-
       - name: Echo tags
         run: echo "${{ github.event.release.tag_name }}"
       
@@ -57,9 +54,6 @@ jobs:
           tags:  ${{ github.repository_owner }}/ghorg:${{ github.event.release.tag_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
 
       - name: Update Docker Hub description
         uses: peter-evans/dockerhub-description@v2
