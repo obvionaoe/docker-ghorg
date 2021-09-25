@@ -8,6 +8,8 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    env:
+      project_name: ghorg
     steps:
       - name: Cache Docker layers
         uses: actions/cache@v2
@@ -37,7 +39,7 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository_owner }}/ghorg:latest
+          tags:  ${{ github.repository_owner }}/${{ env.project_name }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -55,7 +57,7 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository_owner }}/ghorg:${{ steps.tag_name.outputs }}
+          tags:  ${{ github.repository_owner }}/${{ env.project_name }}:${{ steps.tag_name.outputs }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -64,4 +66,5 @@ jobs:
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          repository: ${{ github.repository_owner }}/${{ env.project_name }}
 
