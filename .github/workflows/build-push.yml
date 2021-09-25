@@ -41,9 +41,10 @@ jobs:
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
-      - name: Echo tags
-        run: echo "${{ github.event.release.tag_name }}"
-      
+      - name: Get the tag
+        id: tag_name
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+            
       - name: Build and push 
         id: docker_build
         uses: docker/build-push-action@v2
@@ -51,7 +52,7 @@ jobs:
           context: .
           push: true
           builder: ${{ steps.buildx.outputs.name }}
-          tags:  ${{ github.repository_owner }}/ghorg:${{ github.event.release.tag_name }}
+          tags:  ${{ github.repository_owner }}/ghorg:${{ tag_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
