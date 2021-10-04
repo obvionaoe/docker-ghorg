@@ -27,7 +27,7 @@ RUN CGO_ENABLED=0 go build -o /go/bin/ghorg
 ##############################
 
 FROM alpine
-RUN apk update && apk add --no-cache httpie ca-certificates && update-ca-certificates
+RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
 
 # Import from the builder image.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
