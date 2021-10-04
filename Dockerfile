@@ -26,7 +26,7 @@ RUN CGO_ENABLED=0 go build -o /go/bin/ghorg
 # STEP 2 build a small image #
 ##############################
 
-FROM alpine
+FROM alpine:3.13
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
 
 # Import from the builder image.
