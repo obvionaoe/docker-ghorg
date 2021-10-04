@@ -43,3 +43,6 @@ RUN chmod +x entrypoint.sh
 
 # Set it as entrypoint
 ENTRYPOINT ["./entrypoint.sh"]
+
+# Create directories for volumes
+RUN mkdir -p /ghorg/output /ghorg/config
