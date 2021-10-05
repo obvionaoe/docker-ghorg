@@ -29,8 +29,6 @@ RUN CGO_ENABLED=0 go build -o /go/bin/ghorg
 FROM alpine
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
 
-RUN which ssh
-
 ENV PATH "$PATH:/usr/bin"
 
 # Import from the builder image.
