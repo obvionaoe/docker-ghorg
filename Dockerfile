@@ -10,7 +10,7 @@ RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificat
 WORKDIR $GOPATH/src/
 
 # Set version env var
-ENV GHORG_VERSION=v1.7.0
+ENV GHORG_VERSION=v1.7.1
 
 # Clone the branch for the given version
 RUN git clone --depth 1 --branch ${GHORG_VERSION} https://github.com/gabrie30/ghorg
@@ -26,8 +26,12 @@ RUN CGO_ENABLED=0 go build -o /go/bin/ghorg
 # STEP 2 build a small image #
 ##############################
 
-FROM alpine:3.13
+FROM alpine
 RUN apk update && apk add --no-cache git ca-certificates && update-ca-certificates
+
+RUN which ssh
+
+ENV PATH "$PATH:/usr/bin"
 
 # Import from the builder image.
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
