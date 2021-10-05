@@ -11,7 +11,7 @@ jobs:
     env:
       project_name: ghorg
     steps:
-      - name: Cache Docker layers
+      - name: Cache Docker build layers
         uses: actions/cache@v2
         with:
           path: /tmp/.buildx-cache
